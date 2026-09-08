@@ -1,0 +1,226 @@
+//TestCase - 1
+
+package Demo;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class FacebookTestCase1 {
+
+    public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        
+        driver.get("https://www.facebook.com/");
+
+        
+        driver.findElement(By.linkText("Create new account")).click();
+
+        WebElement firstName = driver.findElement(By.id("_R_1cl2p4jikacppb6amH1_"));
+
+        WebElement surname = driver.findElement(By.id("_R_1kl2p4jikacppb6amH1_"));
+
+        int firstNameY = firstName.getLocation().getY();
+        int surnameY = surname.getLocation().getY();
+
+        if (Math.abs(firstNameY - surnameY) <= 5) {
+            System.out.println("PASS: First Name and Surname fields are aligned on the same line.");
+        } else {
+            System.out.println("FAIL: First Name and Surname fields are NOT aligned on the same line.");
+        }
+
+        driver.quit();
+    }
+}
+
+//TestCase - 2
+
+package Demo;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class FacebookTestCase2 {
+
+    public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        driver.get("https://www.facebook.com/");
+
+        WebElement createAccount = driver.findElement(By.linkText("Create new account"));
+
+        System.out.println("Create New Account Location: " + createAccount.getLocation());
+
+        createAccount.click();
+
+        WebElement email = driver.findElement(By.xpath("//label[normalize-space()='Mobile number or email address']/preceding-sibling::input"));
+
+        System.out.println("----- BEFORE ENTERING EMAIL -----");
+
+        System.out.println("DOM Attribute: "+ email.getAttribute("value"));
+
+        System.out.println("DOM Property: "+ email.getDomProperty("value"));
+
+        email.sendKeys("test@gmail.com");
+
+        System.out.println("----- AFTER ENTERING EMAIL -----");
+
+        System.out.println("DOM Attribute: "+ email.getAttribute("value"));
+
+        System.out.println("DOM Property: "+ email.getDomProperty("value"));
+
+        WebElement submitButton = driver.findElement(By.xpath("//*[@role='button' and contains(normalize-space(.),'Submit')]"));
+
+        System.out.println("----- SUBMIT BUTTON SIZE -----");
+
+        System.out.println("Size: "+ submitButton.getSize());
+
+        System.out.println("Width: "+ submitButton.getSize().getWidth());
+
+        System.out.println("Height: "+ submitButton.getSize().getHeight());
+
+        System.out.println("----- CSS PROPERTIES -----");
+
+        System.out.println("Background Color: "+ submitButton.getCssValue("background-color"));
+
+        System.out.println("Font Size: "+ submitButton.getCssValue("font-size"));
+
+        System.out.println("Font Family: "+ submitButton.getCssValue("font-family"));
+
+        driver.quit();
+    }
+}
+
+
+//TestCase - 3
+
+package Demo;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class DemoWebShopTestCase3 {
+
+    public static void main(String[] args) throws Exception {
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        driver.get("https://demowebshop.tricentis.com/");
+
+        WebElement laptop = driver.findElement(By.xpath("//h2/a[normalize-space()='14.1-inch Laptop']") );
+
+        WebElement laptopImage = driver.findElement(
+                By.xpath("//img[@alt='Picture of 14.1-inch Laptop']")
+        );
+
+        File source = laptopImage.getScreenshotAs(OutputType.FILE);
+
+        File destination = new File(
+                "screenshot/14.1-inch-Laptop.png"
+        );
+
+        Files.createDirectories(destination.getParentFile().toPath());
+
+        Files.copy(
+                source.toPath(),
+                destination.toPath(),
+                StandardCopyOption.REPLACE_EXISTING
+        );
+
+        System.out.println("Laptop Image Screenshot Saved Successfully.");
+
+        WebElement addToCart = driver.findElement(
+                By.xpath("//h2/a[normalize-space()='14.1-inch Laptop']/ancestor::div[contains(@class,'product-item')]//input[contains(@value,'Add to cart')]")
+        );
+
+        System.out.println("Add To Cart Button Size: "
+                + addToCart.getSize());
+
+        System.out.println("Width: "
+                + addToCart.getSize().getWidth());
+
+        System.out.println("Height: "
+                + addToCart.getSize().getHeight());
+
+        addToCart.click();
+
+        WebElement shoppingCart = driver.findElement(
+                By.xpath("//a[contains(normalize-space(),'Shopping cart')]")
+        );
+
+        shoppingCart.click();
+
+        WebElement removeCheckbox = driver.findElement(
+                By.name("removefromcart")
+        );
+
+        System.out.println("Remove Checkbox Selected: "
+                + removeCheckbox.isSelected());
+
+        System.out.println("Remove Checkbox Rectangle: "
+                + removeCheckbox.getRect());
+
+        System.out.println("X: "
+                + removeCheckbox.getRect().getX());
+
+        System.out.println("Y: "
+                + removeCheckbox.getRect().getY());
+
+        System.out.println("Width: "
+                + removeCheckbox.getRect().getWidth());
+
+        System.out.println("Height: "
+                + removeCheckbox.getRect().getHeight());
+
+        boolean messageBefore = driver.findElements(
+                By.cssSelector(".message-error, .message-failure, .message-success")
+        ).stream().anyMatch(WebElement::isDisplayed);
+
+        System.out.println(
+                "Alert Message Before Clicking Apply Coupon: "
+                + messageBefore
+        );
+
+        WebElement applyCoupon = driver.findElement(
+                By.name("applydiscountcouponcode")
+        );
+
+        applyCoupon.click();
+
+        boolean messageAfter = driver.findElements(
+                By.cssSelector(".message-error, .message-failure, .message-success")
+        ).stream().anyMatch(WebElement::isDisplayed);
+
+        System.out.println(
+                "Alert Message After Clicking Apply Coupon: "
+                + messageAfter
+        );
+
+        driver.quit();
+    }
+}
