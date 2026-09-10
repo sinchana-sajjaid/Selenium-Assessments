@@ -1,0 +1,116 @@
+//Testcase - 1
+
+package Demo;
+import java.time.Duration;
+
+import java.util.List;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+
+public class FacebookloginTestCase1{
+	public static void main(String[] args) throws InterruptedException {
+		WebDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.get("https://www.facebook.com/reg/?entry_point=login");
+		List<WebElement> tfs = driver.findElements(By.xpath("//input[@inputmode = 'text']"));
+		int count = tfs.size();
+		System.out.println("Number of text fields = " +tfs.size());
+		
+		for(WebElement tf : tfs)
+		{
+			System.out.println(tfs.size());
+			if(tf.getDomAttribute("type").equals("password"))
+				tf.sendKeys("123345");
+		}
+
+		
+		Thread.sleep(2000);
+		driver.quit();
+		
+		}
+		}
+
+
+//Testcase - 2
+
+package Demo;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class ZomatoTestCase2 {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		 WebDriver driver = new ChromeDriver();
+	        driver.manage().window().maximize();
+	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+	        driver.get("https://www.zomato.com/bangalore/delivery");
+	        driver.findElement(By.xpath("//button[text()='Log in']")).click();
+	        WebElement phone = driver.findElement(By.id("auth-login-ui"));
+	        driver.switchTo().frame(phone);
+	        driver.findElement(By.xpath("//input[@type='number']")).sendKeys("7899233303");
+	        Thread.sleep(2000);
+	        driver.findElement(By.xpath("//i[@class = 'sc-rbbb40-1 cLEXmC sc-re4bd0-1 bKymEa']")).click();
+	        driver.switchTo().defaultContent();
+	        String text = driver.findElement(By.xpath("//div[text()='Dining Out']")).getText();
+	        if (text.equals("Dining Out")) {
+	            System.out.println("control is returned to main page");
+	        } else {
+	            System.out.println("control is not returned to main page");
+	        }
+	    }
+	}
+
+
+//Testcase - 3
+
+package Demo;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class BigbasketTestCase3 {
+	public static void main(String[] args) throws InterruptedException {
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.get("https://www.bigbasket.com/");
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("(//input[@type='text'])[2]")).sendKeys("perfumes");;
+		Thread.sleep(4000);
+		WebElement add = driver.findElement(By.xpath("//button[text()='Add']"));
+		add.click();
+		Thread.sleep(5000);
+		WebElement add1 = driver.findElement(By.xpath("(//button[text()='Add'])[3]"));
+		add1.click();
+		Thread.sleep(2000);
+		String text = driver.findElement(By.xpath("//span[@class='sc-fUnMCh cDZjuK']")).getText();
+		if(!text.equals(""))
+		{
+			System.out.println("added to cart");
+			System.out.println(text+" products are added to cart");
+		}
+		else
+		{
+			System.out.println("not added to cart");
+		}
+		Thread.sleep(2000);
+		driver.quit();
+	}
+}
+
+
+	
