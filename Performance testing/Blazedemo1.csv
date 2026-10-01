@@ -1,0 +1,6 @@
+From,To,flight,price,airline,inputName,address,city,state,zipCode,creditCardNumber,nameOnCard
+Paris,Rome,43,$472.56,Virgin America,kavya,col1,Delhi,Delhi,583645,1234,kavya
+Boston,London,234,$432.98,United Airlines,Shree,col2,Pune,Mah,523641,5698,Shree
+Portland,Berlin,9696,$200.98,Aer Lingus,John,col3,bangl,kar,584125,7896,John
+Mexico City,New York,12,$765.32,Virgin America,Handsome,col4,chenni,tam,583121,4563,Handsome
+San Diego,Dublin,4346,$233.98,Lufthansa,Lucci,col5,ballari,kar,584126,1258,Lucci
